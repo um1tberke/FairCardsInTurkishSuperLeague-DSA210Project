@@ -3,7 +3,7 @@
 *Do big clubs or home teams get a card advantage?*
 
 ## Motivation
-In Türkiye, many fans believe that “big clubs” or home teams are treated more softly by referees. Instead of relying on opinions, this project tests that claim with data. If a measurable effect exists, it matters for competitive balance and public trust. 
+In Türkiye, many fans believe that “big clubs” or home teams are treated more softly by referees. Instead of relying on opinions, this project is going to test that claim with data. If a measurable effect exists, it matters for competitive balance and public trust. 
 
 ## Project Overview
 I will analyze one complete Süper Lig season (preferably **2023–24**) to test two effects:
