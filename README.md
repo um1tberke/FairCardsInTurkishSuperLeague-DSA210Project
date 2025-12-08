@@ -25,8 +25,8 @@ Primary data will be compiled from:
 
 ## Scope & Assumptions (MVP)
 - Start with a **single complete season (2023–24)** for consistency; extend later if time allows.
-- **Big-club list (fixed):** Fenerbahçe, Beşiktaş, Galatasaray, Trabzonspor.
-- **Red cards** are kept separate; I will also run a sensitivity check that treats **“red = 2 yellows.”**
+- **Big-club list (fixed):** Fenerbahçe, Beşiktaş, Galatasaray.
+- **Red cards** and **Second yellow red cards** are kept separate; I will also run a sensitivity check that treats **“red = 2 yellows.”** Also **second yellow reds will be counted as +1 yellow** for the team.
 - No player-level tactics or lineups in MVP; the goal is a **league-level fairness** check.
 
 ## Method (high level)
