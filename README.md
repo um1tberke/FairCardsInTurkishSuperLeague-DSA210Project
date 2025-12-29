@@ -16,7 +16,7 @@ To keep comparisons fair, I will enrich match data with **pre-match betting odds
 - **RQ1:** Do “big-club” teams receive fewer yellow/red cards than their opponents in a systematic way?
 - **RQ2:** Does playing at home create a meaningful advantage in card counts?
 
-## Dataset (planned) — Sources
+## Dataset — Sources
 Primary data will be compiled from:
 - **Mackolik** — match sheets for Süper Lig (teams, date/time, yellow/red cards, and pre-match betting odds).
 - **Opta** (as available via public summaries) — to cross-check card/event counts and definitions.
