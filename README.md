@@ -134,3 +134,45 @@ Across 114 matches, the means are:
 - `diff_home_card_points` ≈ **−0.29**
 
 Both suggest that home teams receive slightly fewer cards, but one-sample t-tests against 0 give two-sided p-values around **0.18–0.22**, which are not significant at the 5% level. Statistically, I cannot claim a clear home-field advantage in card counts in this dataset.
+
+## ML analysis for RQ1 – Predicting which side gets more card points
+
+To complement the hypothesis tests, I framed RQ1 as a binary classification problem:
+
+- Target variable `y_big_more_cards` is **1** if the big club receives more card points than its opponent in a match, and **0** otherwise.
+- Card points are defined as `card_points = yellow + 2 × red`, so a red card counts as two yellows.
+- Matches where both sides had exactly the same card points were dropped from the ML dataset, because there is no clear "winner" in cards.
+
+### Features and modelling setup
+
+The model uses only **pre-match information** from the big-club perspective:
+
+- `team` (Beşiktaş, Fenerbahçe, Galatasaray; one-hot encoded)
+- `home_away` (H / A)
+- `big_win_prob` and `opp_win_prob` – implied win probabilities from Mackolik odds
+- `is_favourite` – indicator for whether the big club is the pre-match favourite
+- `week` – matchweek in the 2023–24 Turkish SuperLeague season
+
+Categorical variables are one-hot encoded, and the data is split into a training and test set using a **stratified 75% / 25% train–test split**.
+
+### Baseline vs. logistic regression
+
+Because class 0 (“opponent gets more card points”) is more frequent (about **60%** of the matches), a majority-class baseline that always predicts 0 reaches about **0.609** test accuracy.
+
+A **logistic regression** model trained on the features above achieves about **0.783** test accuracy, clearly improving on the baseline. The confusion matrix on the test set is:
+
+- class 0 (opponent more card points): **13** correctly predicted, **1** misclassified
+- class 1 (big club more card points): **5** correctly predicted, **4** misclassified
+
+The model therefore captures both classes and performs substantially better than simply always predicting the majority class.
+
+### Interpreting the coefficients
+
+In the logistic regression, **positive coefficients** increase the probability that the big club receives more card points (`y = 1`), while **negative coefficients** increase the probability that the opponent receives more card points (`y = 0`). The main patterns are:
+
+- `is_favourite_True` has a large **negative** coefficient, meaning that when the big club is the pre-match favourite, the model is much less likely to predict that it will receive more card points. This is consistent with the EDA finding that favourites tend to receive fewer cards than their opponents.
+- `team_GALATASARAY` and, to a lesser extent, `team_FENERBAHCE` have negative coefficients relative to Beşiktaş (the reference category), suggesting that, conditional on the other features, Galatasaray and Fenerbahçe are less likely than Beşiktaş to end up with more card points than their opponents.
+- `big_win_prob` is negative and `opp_win_prob` is positive, indicating that when the big club is stronger in the betting odds it is less likely to receive more card points, whereas stronger opponents are associated with a slightly higher chance of the big club getting more card points.
+- The coefficient on `home_away_H` is very small, which supports the hypothesis-test result that any home-field advantage in card counts is weak and not statistically significant.
+
+Overall, the ML model supports the earlier statistical evidence for a **big-club advantage** (especially for favourites and for Galatasaray and Fenerbahçe) and does not find a strong home-field effect in card counts.
